@@ -1,9 +1,7 @@
-// pages/index.js
 import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Animation variants
 const fadeIn = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.6 } },
@@ -22,7 +20,6 @@ const pulse = {
   }
 };
 
-// Format options for different file types
 const formatOptions = {
   image: ['jpg', 'png', 'webp', 'gif', 'svg'],
   video: ['mp4', 'webm', 'avi', 'mov'],
@@ -30,7 +27,6 @@ const formatOptions = {
   document: ['pdf', 'docx', 'txt', 'md', 'csv']
 };
 
-// Utility functions
 const getFileExtension = (filename) => {
   return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
 };
@@ -56,7 +52,6 @@ export default function Home() {
   const [showSuccess, setShowSuccess] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Handle file upload
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
@@ -83,12 +78,10 @@ export default function Home() {
     }
   };
 
-  // Handle format selection
   const handleFormatChange = (e) => {
     setConvertTo(e.target.value);
   };
 
-  // Handle drag and drop events
   const handleDrag = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -110,7 +103,6 @@ export default function Home() {
     }
   };
 
-  // Handle conversion process with animated progress
   const handleConvert = () => {
     if (!file || !convertTo) {
       setError('Please select a file and conversion format.');
@@ -120,7 +112,6 @@ export default function Home() {
     setConverting(true);
     setProgress(0);
     
-    // Simulate conversion process with progress
     const interval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -138,15 +129,12 @@ export default function Home() {
     }, 200);
   };
 
-  // Handle file download after conversion
   const handleDownload = () => {
     if (!file || !convertTo) return;
     
     const originalName = file.name.substring(0, file.name.lastIndexOf('.'));
     const newFileName = `${originalName}.${convertTo}`;
     
-    // Create a blob URL for demonstration
-    // In a real app, this would be the converted file from your backend
     const blob = new Blob([file], { type: file.type });
     const url = URL.createObjectURL(blob);
     
@@ -159,7 +147,6 @@ export default function Home() {
     URL.revokeObjectURL(url);
   };
 
-  // Particle animation background effect
   const particleRef = useRef(null);
   
   useEffect(() => {
@@ -167,11 +154,9 @@ export default function Home() {
       const canvas = particleRef.current;
       const ctx = canvas.getContext('2d');
       
-      // Set canvas to full window size
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       
-      // Particle settings
       const particlesArray = [];
       const numberOfParticles = 100;
       
@@ -221,7 +206,6 @@ export default function Home() {
       init();
       animate();
       
-      // Handle resize
       const handleResize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -243,13 +227,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      {/* Background canvas for particle animation */}
       <canvas 
         ref={particleRef} 
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
       />
       
-      {/* Animated background blur circles */}
       <div className="absolute top-1/4 -left-20 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-4xl opacity-20 animate-blob"></div>
       <div className="absolute top-2/3 -right-20 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-4xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-4xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -286,7 +268,6 @@ export default function Home() {
           variants={slideUp}
         >
           <div className="bg-gray-800 backdrop-filter backdrop-blur-lg bg-opacity-60 rounded-3xl shadow-2xl border border-gray-700 p-6 md:p-8 overflow-hidden">
-            {/* File Upload Area */}
             <motion.div 
               className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                 dragActive ? 'border-blue-400 bg-gray-700 bg-opacity-40' : 'border-gray-600'
@@ -396,7 +377,6 @@ export default function Home() {
               )}
             </motion.div>
 
-            {/* Conversion Settings */}
             <AnimatePresence>
               {file && (
                 <motion.div 
@@ -433,7 +413,6 @@ export default function Home() {
                     </div>
                   </motion.div>
 
-                  {/* Conversion Progress */}
                   {converting && (
                     <motion.div 
                       className="w-full bg-gray-700 rounded-full h-4 overflow-hidden"
@@ -450,7 +429,6 @@ export default function Home() {
                     </motion.div>
                   )}
 
-                  {/* Action Buttons */}
                   <motion.div 
                     className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4"
                     initial={{ y: 20, opacity: 0 }}
@@ -504,7 +482,6 @@ export default function Home() {
               )}
             </AnimatePresence>
 
-            {/* Error Message */}
             <AnimatePresence>
               {error && (
                 <motion.div 
@@ -524,7 +501,6 @@ export default function Home() {
               )}
             </AnimatePresence>
 
-            {/* Success Message */}
             <AnimatePresence>
               {showSuccess && (
                 <motion.div 
@@ -546,7 +522,6 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Features section */}
         <motion.section 
           className="mt-20 text-center max-w-4xl mx-auto"
           initial={{ opacity: 0 }}
@@ -600,7 +575,6 @@ export default function Home() {
           </div>
         </motion.section>
 
-        {/* File format section */}
         <motion.section 
           className="mt-16 mb-10 max-w-4xl mx-auto"
           initial={{ opacity: 0 }}
@@ -668,7 +642,6 @@ export default function Home() {
           </div>
         </motion.section>
         
-        {/* Floating badges */}
         <div className="fixed top-4 right-4 flex space-x-2">
           <motion.div 
             className="bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg px-3 py-1 rounded-full border border-gray-700 text-xs text-gray-300 flex items-center"
@@ -690,7 +663,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Footer */}
         <motion.footer 
           className="mt-16 text-center text-gray-500 text-sm"
           initial={{ opacity: 0 }}
@@ -712,10 +684,8 @@ export default function Home() {
         </motion.footer>
       </div>
       
-      {/* Custom cursor effect - add to end of component */}
       <div id="cursor-fx" className="fixed w-8 h-8 rounded-full border-2 border-blue-400 pointer-events-none mix-blend-difference hidden md:block" style={{ transform: 'translate(-50%, -50%)', zIndex: 9999 }}></div>
       
-      {/* CSS for animations */}
       <style jsx global>{`
         @keyframes blob {
           0%, 100% {
@@ -754,7 +724,6 @@ export default function Home() {
         }
       `}</style>
       
-      {/* Custom cursor effect script */}
       <script dangerouslySetInnerHTML={{
         __html: `
           document.addEventListener('DOMContentLoaded', () => {
@@ -794,7 +763,6 @@ export default function Home() {
   );
 }
 
-// Add custom styles for the app
 export function getStaticProps() {
   return {
     props: {}
