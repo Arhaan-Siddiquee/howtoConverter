@@ -267,7 +267,7 @@ export default function Home() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            File Converter
+            howToConvert
           </motion.h1>
           <motion.p 
             className="text-xl text-gray-400"
@@ -698,7 +698,7 @@ export default function Home() {
           transition={{ delay: 0.9, duration: 0.8 }}
         >
           <div className="max-w-4xl mx-auto px-6 py-6 border-t border-gray-800">
-            <p>© 2025 howToConvert. Made with 💗.</p>
+            <p>© 2025 howToConvert. Made with 💗 by Arhaan Siddiquee.</p>
             
             <div className="flex justify-center space-x-4 mt-4">
               <a href="https://media.makeameme.org/created/trust-me-its-2u3d57.jpg" className="text-gray-400 hover:text-gray-300 transition-colors">
